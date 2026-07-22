@@ -1,0 +1,137 @@
+---
+import { siteConfig } from "../config";
+import profileImage1 from "../img/1.jpg";
+---
+
+<section
+  id="hero"
+  class="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid"
+  style="background: linear-gradient(135deg, rgba(10, 25, 47, 0.95) 0%, rgba(10, 25, 47, 0.98) 100%);"
+>
+  <div class="absolute inset-0 opacity-20 pointer-events-none">
+    <div
+      class="absolute top-0 left-0 w-full h-full"
+      style="background: radial-gradient(ellipse at 20% 20%, rgba(51,238,244,0.15) 0%, transparent 50%), radial-gradient(ellipse at 80% 80%, rgba(66,186,241,0.1) 0%, transparent 50%);"
+    >
+    </div>
+  </div>
+
+  <div class="relative z-10 max-w-6xl w-full mx-auto px-5 py-28 md:py-24">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-10 md:gap-16">
+      <div class="flex-1 min-w-[280px] animate-fade-in-up">
+        <h4
+          class="text-lg md:text-xl mb-2 font-medium"
+          style={`color: ${siteConfig.accentColor}`}
+        >
+          Hello, I'm
+        </h4>
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white leading-tight m-0">
+          {siteConfig.name}
+        </h1>
+        <h2 class="text-xl sm:text-2xl md:text-3xl font-medium mt-3 text-[#ccd6f6]">
+          I'm <span id="typing-text" style={`color: ${siteConfig.accentColor}`}></span><span id="typing-cursor" style={`color: ${siteConfig.accentColor}`}>|</span>
+        </h2>
+        <p class="text-base md:text-lg leading-relaxed mt-5 mb-8 max-w-lg text-white/80">
+          {siteConfig.heroDescription}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#projects" class="btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+            View My Work
+          </a>
+          <a href="#contact" class="btn-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Let's Talk
+          </a>
+        </div>
+      </div>
+
+      <div class="flex-1 min-w-[280px] animate-fade-in-right">
+        <div class="relative max-w-[380px] mx-auto">
+          <div
+            class="w-full aspect-square rounded-2xl relative overflow-hidden flex items-center justify-center text-6xl md:text-7xl font-bold border-4 border-white/10 shadow-2xl"
+            style={`background-image: url(${profileImage1.src}); background-size: cover; background-position: center; color: ${siteConfig.accentColor};`}
+          >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block">
+      <a href="#about" class="scroll-link" aria-label="Scroll down">
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ taglines: siteConfig.heroTaglines }}>
+  const typingEl = document.getElementById("typing-text");
+  const cursorEl = document.getElementById("typing-cursor");
+  let wordIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function typeEffect() {
+    if (!typingEl) return;
+    const current = taglines[wordIndex];
+    const displayed = isDeleting
+      ? current.substring(0, charIndex - 1)
+      : current.substring(0, charIndex + 1);
+
+    typingEl.textContent = displayed;
+
+    if (!isDeleting) charIndex++;
+    else charIndex--;
+
+    let delay = isDeleting ? 40 : 85;
+
+    if (!isDeleting && charIndex === current.length + 1) {
+      isDeleting = true;
+      delay = 1800;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % taglines.length;
+      delay = 400;
+    }
+
+    setTimeout(typeEffect, delay);
+  }
+
+  if (cursorEl) {
+    setInterval(() => {
+      cursorEl.style.opacity = cursorEl.style.opacity === "0" ? "1" : "0";
+    }, 530);
+  }
+
+  typeEffect();
+</script>
+
+<style>
+  .scroll-link {
+    display: block;
+    width: 30px;
+    height: 50px;
+    position: relative;
+  }
+
+  .scroll-link span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-bottom: 2px solid var(--primary-color);
+    border-right: 2px solid var(--primary-color);
+    transform: rotate(45deg);
+    position: absolute;
+    left: 50%;
+    margin-left: -4px;
+    animation: scrollDown 2s infinite;
+    opacity: 0;
+  }
+
+  .scroll-link span:nth-child(1) { top: 10px; animation-delay: 0s; }
+  .scroll-link span:nth-child(2) { top: 18px; animation-delay: 0.3s; }
+  .scroll-link span:nth-child(3) { top: 26px; animation-delay: 0.6s; }
+</style>

@@ -1,0 +1,52 @@
+---
+import { siteConfig } from "../config";
+const hasSkills =
+  siteConfig.skillCategories && siteConfig.skillCategories.length > 0;
+---
+
+{
+  hasSkills && (
+    <section id="skills" class="section py-24 px-5" style="background: rgba(10, 25, 47, 0.95);">
+      <div class="max-w-6xl mx-auto">
+        <div class="section-title">
+          <h2>Skills</h2>
+        </div>
+
+        <div class="space-y-8">
+          {siteConfig.skillCategories.map((category) => (
+            <div class="skill-box">
+              <h4 class="skill-category-title">{category.name}</h4>
+              <div class="flex flex-wrap gap-2">
+                {category.skills.map((skill) => (
+                  <span class="tech-tag">{skill}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .skill-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+  }
+
+  .skill-box:hover {
+    background: rgba(51, 238, 244, 0.06);
+    border-color: rgba(51, 238, 244, 0.15);
+  }
+
+  .skill-category-title {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+  }
+</style>

@@ -1,0 +1,35 @@
+---
+import { siteConfig } from "../config";
+const hasEducation = siteConfig.education && siteConfig.education.length > 0;
+---
+
+{
+  hasEducation && (
+    <section id="education" class="section py-24 px-5" style="background: rgba(10, 25, 47, 0.95);">
+      <div class="max-w-6xl mx-auto">
+        <div class="section-title">
+          <h2>Education</h2>
+        </div>
+
+        <div class="timeline">
+          {siteConfig.education.map((edu, index) => (
+            <div
+              class={`timeline-item ${index % 2 === 0 ? "left" : "right"}`}
+            >
+              <div class="timeline-content">
+                <h3>{edu.school}</h3>
+                <h4>{edu.degree}</h4>
+                <p class="date">{edu.dateRange}</p>
+                <ul>
+                  {edu.achievements.map((achievement) => (
+                    <li>{achievement}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
